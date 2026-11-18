@@ -1,0 +1,394 @@
+/* NUURMART — PREMIUM HOMEPAGE V2 */
+
+.nm-v2-hero {
+  padding: 26px 0 0;
+  background: #faf9f5;
+}
+
+.nm-v2-hero-shell {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  min-height: 610px;
+  background: #f0f0e8;
+  overflow: hidden;
+}
+
+.nm-v2-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 75px clamp(28px, 5.5vw, 88px);
+  position: relative;
+  z-index: 1;
+}
+
+.nm-v2-overline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #667d68;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .18em;
+}
+
+.nm-v2-hero-copy h1 {
+  font-size: clamp(46px, 4.8vw, 78px);
+  font-weight: 500;
+  line-height: 1.11;
+  letter-spacing: -.065em;
+  color: #17382d;
+  margin: 27px 0 24px;
+}
+
+.nm-v2-hero-copy h1 em,
+.nm-v2-promo h2 em {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 400;
+}
+
+.nm-v2-hero-copy h1 em {
+  color: #7a8c74;
+  font-size: .87em;
+  letter-spacing: -.045em;
+}
+
+.nm-v2-hero-copy > p {
+  font-size: 14px;
+  line-height: 2;
+  color: #758177;
+  max-width: 380px;
+}
+
+.nm-v2-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-top: 35px;
+}
+
+.nm-v2-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 18px 22px;
+  background: #173c30;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background .25s, transform .25s;
+}
+
+.nm-v2-primary:hover {
+  background: #2b5945;
+  transform: translateY(-2px);
+}
+
+.nm-v2-secondary {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 750;
+  color: #294538;
+}
+
+.nm-v2-hero-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 85px;
+  font-size: 9px;
+  letter-spacing: .12em;
+  color: #87958a;
+}
+
+.nm-v2-line {
+  height: 1px;
+  background: #c4cec4;
+  width: 47px;
+}
+
+.nm-v2-hero-image {
+  min-height: 610px;
+  position: relative;
+  overflow: hidden;
+  background: #8d8b70;
+}
+
+.nm-v2-cover {
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+
+.nm-v2-hero-image:hover .nm-v2-cover,
+.nm-v2-promo:hover .nm-v2-cover {
+  transform: scale(1.045);
+}
+
+.nm-v2-image-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 48%,
+    rgba(14, 32, 23, .55) 100%
+  );
+}
+
+.nm-v2-image-label {
+  position: absolute;
+  left: 38px;
+  bottom: 38px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nm-v2-image-label > span {
+  letter-spacing: .18em;
+  font-size: 9px;
+}
+
+.nm-v2-image-label strong {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 29px;
+  font-weight: 400;
+}
+
+.nm-v2-image-seal {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  width: 110px;
+  height: 110px;
+  border: 1px solid rgba(255,255,255,.75);
+  border-radius: 100%;
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  color: #244631;
+}
+
+.nm-v2-image-seal span {
+  font-size: 8px;
+  letter-spacing: .13em;
+}
+
+.nm-v2-image-seal strong {
+  font-size: 13px;
+  letter-spacing: .15em;
+}
+
+.nm-v2-promotions {
+  padding: 35px 0 65px;
+  background: #faf9f5;
+}
+
+.nm-v2-promo-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #889388;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  margin-bottom: 18px;
+}
+
+.nm-v2-promo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.nm-v2-promo {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  min-height: 340px;
+  background: #6f7d65;
+  isolation: isolate;
+}
+
+.nm-v2-promo-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(10,31,23,.85),
+    rgba(10,31,23,.38) 65%,
+    rgba(10,31,23,.08)
+  );
+}
+
+.nm-v2-promo-2 .nm-v2-promo-shade {
+  background: linear-gradient(
+    90deg,
+    rgba(42,35,21,.83),
+    rgba(42,35,21,.38) 70%,
+    rgba(42,35,21,.10)
+  );
+}
+
+.nm-v2-promo-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  padding: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.nm-v2-promo-content > span:first-child {
+  font-size: 9px;
+  letter-spacing: .19em;
+  font-weight: 750;
+}
+
+.nm-v2-promo h2 {
+  margin: 18px 0 12px;
+  font-size: clamp(32px, 3.3vw, 48px);
+  font-weight: 550;
+  line-height: 1.15;
+  letter-spacing: -.05em;
+}
+
+.nm-v2-promo-content p {
+  font-size: 12px;
+  color: #eef0e9;
+  line-height: 1.7;
+  max-width: 260px;
+}
+
+.nm-v2-promo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(255,255,255,.7);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+@media (max-width: 1050px) {
+  .nm-v2-hero-shell {
+    grid-template-columns: 48% 52%;
+    min-height: 530px;
+  }
+
+  .nm-v2-hero-copy {
+    padding: 45px 30px;
+  }
+
+  .nm-v2-hero-image {
+    min-height: 530px;
+  }
+
+  .nm-v2-hero-copy h1 {
+    font-size: clamp(42px, 5vw, 60px);
+  }
+
+  .nm-v2-hero-footer {
+    margin-top: 45px;
+  }
+}
+
+@media (max-width: 760px) {
+  .nm-v2-hero {
+    padding-top: 12px;
+  }
+
+  .nm-v2-hero-shell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nm-v2-hero-copy {
+    padding: 57px 25px 43px;
+  }
+
+  .nm-v2-hero-copy h1 {
+    font-size: clamp(42px, 9vw, 59px);
+  }
+
+  .nm-v2-hero-copy > p {
+    font-size: 13px;
+  }
+
+  .nm-v2-hero-actions {
+    gap: 18px;
+  }
+
+  .nm-v2-hero-footer {
+    margin-top: 42px;
+  }
+
+  .nm-v2-hero-image {
+    min-height: 390px;
+  }
+
+  .nm-v2-image-seal {
+    width: 83px;
+    height: 83px;
+    top: 18px;
+    right: 18px;
+  }
+
+  .nm-v2-image-label {
+    left: 23px;
+    bottom: 25px;
+  }
+
+  .nm-v2-image-label strong {
+    font-size: 23px;
+  }
+
+  .nm-v2-promotions {
+    padding: 27px 0 45px;
+  }
+
+  .nm-v2-promo-heading {
+    font-size: 8px;
+  }
+
+  .nm-v2-promo-heading span:last-child {
+    display: none;
+  }
+
+  .nm-v2-promo-grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .nm-v2-promo {
+    min-height: 290px;
+  }
+
+  .nm-v2-promo-content {
+    padding: 32px 25px;
+  }
+
+  .nm-v2-promo h2 {
+    font-size: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-v2-cover,
+  .nm-v2-primary {
+    transition: none;
+  }
+}
