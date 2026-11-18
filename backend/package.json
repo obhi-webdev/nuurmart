@@ -1,0 +1,27 @@
+{
+  "name": "@nuurmart/backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^5.0.0",
+    "mongoose": "^9.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.0",
+    "helmet": "^8.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.0",
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "nuurmart",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n FRONTEND,BACKEND -c cyan,green \"npm --prefix frontend run dev\" \"npm --prefix backend run dev\"",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build && npm --prefix backend run build",
+    "typecheck": "npm --prefix backend run typecheck && npm --prefix frontend exec -- tsc --noEmit"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
