@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { env } from "./config/env.js";
+import { productRouter } from "./modules/products/product.routes.js";
+import { categoryRouter } from "./modules/categories/category.routes.js";
 
 export const app = express();
 
@@ -20,9 +22,27 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+app.use("/api/products", productRouter);
+app.use("/api/categories", categoryRouter);
+
 app.use((_req, res) => {
   res.status(404).json({
     success: false,
     message: "API route not found"
+  });
+});
+
+
+app.use((
+  error: unknown,
+  _req: express.Request,
+  res: express.Response,
+  _next: express.NextFunction
+) => {
+  console.error("API error:", error);
+
+  res.status(500).json({
+    success: false,
+    message: "Internal server error",
   });
 });
