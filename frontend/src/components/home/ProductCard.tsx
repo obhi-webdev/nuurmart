@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { productUrl } from "@/features/products/routes";
 import {
   ArrowUpRight,
   Heart,
@@ -34,6 +36,11 @@ export function ProductCard({
   return (
     <article className="nm3-product">
       <div className="nm3-product-media">
+        <Link
+          href={productUrl(product.id)}
+          className="nm4-card-image-link"
+          aria-label={`View ${product.name}`}
+        />
         <Image
           src={product.image}
           alt={`Demo photography for ${product.name}`}
@@ -93,7 +100,11 @@ export function ProductCard({
           </span>
         </div>
 
-        <h3>{product.name}</h3>
+        <h3>
+          <Link href={productUrl(product.id)}>
+            {product.name}
+          </Link>
+        </h3>
 
         <p className="nm3-product-unit">{product.unit}</p>
 

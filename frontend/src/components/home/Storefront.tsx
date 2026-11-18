@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
 
 import { useMemo, useState } from "react";
@@ -15,6 +16,7 @@ import {
 } from "lucide-react";
 import { StoreHeader } from "@/components/layout/StoreHeader";
 import { CartDrawer } from "@/components/layout/CartDrawer";
+import { categoryUrl } from "@/features/products/routes";
 import { ProductCard } from "@/components/home/ProductCard";
 import { PremiumHero } from "@/components/home/hero/PremiumHero";
 import { PromoBanners } from "@/components/home/promotions/PromoBanners";
@@ -107,18 +109,17 @@ export function Storefront() {
                 <span className="nm-eyebrow">FIND YOUR ESSENTIALS</span>
                 <h2>Shop by <em>Category</em></h2>
               </div>
-              <a href="#shop" className="nm-text-link">
+              <Link href="/collections" className="nm-text-link">
                 Explore All <ArrowUpRight size={17} />
-              </a>
+              </Link>
             </div>
 
             <div className="nm-categories-grid">
               {categories.filter((item) => item.name !== "All").map((item) => (
-                <button
+                <Link
                   key={item.name}
+                  href={categoryUrl(item.name)}
                   className="nm-category-card"
-                  onClick={() => shopCategory(item.name)}
-                  type="button"
                 >
                   <div className="nm-category-art">
                     <Image
@@ -132,7 +133,7 @@ export function Storefront() {
                   <strong>{item.name}</strong>
                   <small>{item.description}</small>
                   <ArrowUpRight size={16} />
-                </button>
+                </Link>
               ))}
             </div>
           </div>
