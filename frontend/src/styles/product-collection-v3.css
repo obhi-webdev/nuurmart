@@ -1,0 +1,285 @@
+/* NUURMART — PRODUCT COLLECTION V3 */
+
+.nm3-product {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #e7e9e2;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+}
+
+.nm3-product:hover {
+  border-color: #c7d0c1;
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(19,45,31,.07);
+}
+
+.nm3-product-media {
+  position: relative;
+  aspect-ratio: 1 / 1.04;
+  overflow: hidden;
+  background: #f3f1e9;
+}
+
+.nm3-product-photo {
+  object-fit: cover;
+  transition: transform .55s ease;
+}
+
+.nm3-product:hover .nm3-product-photo {
+  transform: scale(1.07);
+}
+
+.nm3-product-labels {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: calc(100% - 65px);
+  z-index: 2;
+}
+
+.nm3-label-featured,
+.nm3-label-discount {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 9px;
+  font-size: 8px;
+  line-height: 1.2;
+  letter-spacing: .06em;
+  font-weight: 800;
+}
+
+.nm3-label-featured {
+  color: #243e2e;
+  background: rgba(255,255,255,.94);
+}
+
+.nm3-label-discount {
+  background: #2d674a;
+  color: #fff;
+}
+
+.nm3-wishlist {
+  position: absolute;
+  z-index: 3;
+  right: 12px;
+  top: 12px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #2b4234;
+  transition: color .2s, transform .2s;
+}
+
+.nm3-wishlist:hover { transform: scale(1.09); }
+.nm3-wishlist.selected { color: #bc4c4c; }
+
+.nm3-quick-add {
+  position: absolute;
+  z-index: 2;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 12px;
+  border: none;
+  background: rgba(255,255,255,.96);
+  color: #244331;
+  font-size: 11px;
+  font-weight: 750;
+  transform: translateY(calc(100% + 20px));
+  opacity: 0;
+  transition: transform .25s, opacity .25s;
+}
+
+.nm3-product:hover .nm3-quick-add,
+.nm3-quick-add:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.nm3-quick-add svg:last-child { margin-left: auto; }
+
+.nm3-product-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 17px 17px;
+}
+
+.nm3-product-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: .06em;
+  color: #819084;
+}
+
+.nm3-product-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  letter-spacing: .04em;
+  color: #a18a54;
+}
+
+.nm3-product-content h3 {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  margin: 12px 0 5px;
+  min-height: 46px;
+}
+
+.nm3-product-unit {
+  color: #869088;
+  font-size: 11px;
+}
+
+.nm3-product-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 21px;
+  padding-bottom: 15px;
+}
+
+.nm3-product-price strong {
+  color: #1a5138;
+  font-size: 18px;
+}
+
+.nm3-product-price del {
+  color: #929b93;
+  font-size: 11px;
+}
+
+.nm3-add-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 10px;
+  border: 1px solid #d5dfd3;
+  background: white;
+  color: #25523a;
+  font-size: 11px;
+  font-weight: 750;
+  transition: background .2s, color .2s;
+}
+
+.nm3-add-button svg:last-child {
+  margin-left: auto;
+}
+
+.nm3-add-button:hover {
+  background: #173c30;
+  color: #fff;
+}
+
+.nm-category-art {
+  position: relative;
+  overflow: hidden;
+}
+
+.nm3-category-photo {
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.nm-category-card:hover .nm3-category-photo {
+  transform: scale(1.075);
+}
+
+.nm3-cart-photo {
+  position: relative;
+  overflow: hidden;
+  background: #f5f3ec;
+}
+
+@media (max-width: 760px) {
+  .nm3-product-media {
+    aspect-ratio: 1 / 1.12;
+  }
+
+  .nm3-product-content {
+    padding: 13px 10px;
+  }
+
+  .nm3-product-content h3 {
+    font-size: 12px;
+    min-height: 54px;
+  }
+
+  .nm3-product-labels {
+    top: 7px;
+    left: 7px;
+    gap: 4px;
+  }
+
+  .nm3-label-featured,
+  .nm3-label-discount {
+    font-size: 7px;
+    padding: 5px;
+  }
+
+  .nm3-wishlist {
+    width: 30px;
+    height: 30px;
+    right: 6px;
+    top: 6px;
+  }
+
+  .nm3-wishlist svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .nm3-product-price strong {
+    font-size: 15px;
+  }
+
+  .nm3-product-price {
+    padding-top: 15px;
+  }
+
+  .nm3-add-button {
+    font-size: 10px;
+    gap: 5px;
+    padding: 10px 6px;
+  }
+
+  .nm3-add-button svg {
+    width: 13px;
+  }
+
+  .nm3-quick-add {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm3-product,
+  .nm3-product-photo,
+  .nm3-category-photo,
+  .nm3-quick-add {
+    transition: none;
+  }
+}

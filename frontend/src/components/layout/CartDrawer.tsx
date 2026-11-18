@@ -1,4 +1,6 @@
 "use client";
+import Image from "next/image";
+
 
 import { ShoppingBag, Trash2, X } from "lucide-react";
 import {
@@ -64,11 +66,14 @@ export function CartDrawer({
 
               return (
                 <div className="nm-cart-line" key={product.id}>
-                  <div
-                    className="nm-cart-line-art"
-                    style={{ backgroundColor: product.accent }}
-                  >
-                    {product.image}
+                  <div className="nm-cart-line-art nm3-cart-photo">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="95px"
+                      style={{ objectFit: "cover" }}
+                    />
                   </div>
                   <div className="nm-cart-line-info">
                     <h3>{product.name}</h3>

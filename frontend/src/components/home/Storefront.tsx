@@ -1,4 +1,6 @@
 "use client";
+import Image from "next/image";
+
 
 import { useMemo, useState } from "react";
 import {
@@ -23,11 +25,31 @@ import {
 } from "@/features/products/catalog";
 import { useCart } from "@/features/cart/use-cart";
 
+const categoryPhotos: Record<string, string> = {
+  Honey: "/images/categories/honey.jpg",
+  Dates: "/images/categories/dates.jpg",
+  "Oil & Ghee": "/images/categories/oil.jpg",
+  Spices: "/images/categories/spices.jpg",
+  "Nuts & Seeds": "/images/categories/nuts.jpg",
+  "Organic Foods": "/images/categories/rice.jpg",
+};
+
 export function Storefront() {
   const [category, setCategory] = useState<Category>("All");
   const [query, setQuery] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
   const cart = useCart();
+  // nm3-wishlist-state: session-only wishlist until account APIs exist.
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  function toggleFavorite(id: string) {
+    setFavorites((current) =>
+      current.includes(id)
+        ? current.filter((item) => item !== id)
+        : [...current, id]
+    );
+  }
+
 
   const filtered = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -99,9 +121,13 @@ export function Storefront() {
                   type="button"
                 >
                   <div className="nm-category-art">
-                    <span role="img" aria-label={item.name}>
-                      {item.icon}
-                    </span>
+                    <Image
+                      src={categoryPhotos[item.name]}
+                      alt={`${item.name} category`}
+                      fill
+                      sizes="(max-width: 760px) 33vw, 17vw"
+                      className="nm3-category-photo"
+                    />
                   </div>
                   <strong>{item.name}</strong>
                   <small>{item.description}</small>
@@ -145,6 +171,8 @@ export function Storefront() {
                     key={product.id}
                     product={product}
                     onAdd={addToCart}
+                    favorite={favorites.includes(product.id)}
+                    onFavorite={toggleFavorite}
                   />
                 ))}
               </div>
