@@ -1,4 +1,6 @@
 import express from "express";
+import path from "node:path";
+import { productUploadRouter } from "./modules/products/product-upload.routes.js";
 import { adminProductRouter } from "./modules/products/admin-product.routes.js";
 import { adminCategoryRouter } from "./modules/categories/admin-category.routes.js";
 import cookieParser from "cookie-parser";
@@ -27,6 +29,19 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+app.use(
+  "/uploads/products",
+  express.static(path.resolve(process.cwd(), "uploads/products"), {
+    dotfiles: "deny",
+    index: false,
+    setHeaders: (res) => {
+      res.setHeader("X-Content-Type-Options", "nosniff");
+      res.setHeader("Cache-Control", "public, max-age=86400");
+    }
+  })
+);
+
+app.use("/api/admin/uploads", productUploadRouter);
 app.use("/api/admin/products", adminProductRouter);
 app.use("/api/admin/categories", adminCategoryRouter);
 app.use("/api/admin", adminRouter);

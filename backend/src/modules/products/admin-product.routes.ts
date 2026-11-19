@@ -29,7 +29,7 @@ const productSchema = z.object({
   shortDescription: z.string().max(500),
   description: z.string().max(10000),
   images: z.array(
-    z.string().regex(/^\/images\/[a-zA-Z0-9/_-]+\.(jpg|jpeg|png|webp)$/)
+    z.string().regex(/^\/(?:images\/[a-zA-Z0-9/_-]+\.(?:jpg|jpeg|png|webp)|uploads\/products\/[a-f0-9-]{36}\.webp)$/)
   ).max(12),
   featured: z.boolean(),
   status: z.enum(["draft", "active", "archived"])

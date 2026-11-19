@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Plus, Save, RefreshCw } from "lucide-react";
@@ -113,6 +114,7 @@ export default function AdminProductsPage() {
   const [editing, setEditing] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -168,6 +170,50 @@ export default function AdminProductsPage() {
     setEditing(null);
     setForm(empty);
     setMessage("");
+  }
+
+  async function uploadImage(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const image = event.target.files?.[0];
+    if (!image) return;
+
+    if (image.size > 5 * 1024 * 1024) {
+      setError("Maximum image size is 5 MB.");
+      event.target.value = "";
+      return;
+    }
+
+    setUploading(true);
+    setError("");
+    setMessage("");
+
+    try {
+      const body = new FormData();
+      body.append("image", image);
+
+      const response = await fetch(`${API}/admin/uploads/product-image`, {
+        method: "POST",
+        credentials: "include",
+        body
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Image upload failed");
+      }
+
+      change("image", result.data.url);
+      setMessage("Image uploaded and optimized successfully.");
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Image upload failed"
+      );
+    } finally {
+      setUploading(false);
+      event.target.value = "";
+    }
   }
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -296,11 +342,42 @@ export default function AdminProductsPage() {
                 </label>
               </div>
 
-              <label>Product Image Path
-                <input placeholder="/images/products/honey.jpg"
-                  value={form.image}
-                  onChange={(e) => change("image", e.target.value)}/>
-              </label>
+              <div className="nma-image-upload">
+                <label htmlFor="nma-product-upload">
+                  Product Image
+                </label>
+
+                {form.image ? (
+                  <div className="nma-image-preview">
+                    <Image
+                      src={form.image}
+                      alt="Selected product preview"
+                      width={160}
+                      height={160}
+                      unoptimized
+                    />
+                    <span>{form.image}</span>
+                  </div>
+                ) : (
+                  <div className="nma-image-placeholder">
+                    No product image selected
+                  </div>
+                )}
+
+                <input
+                  id="nma-product-upload"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={uploadImage}
+                  disabled={uploading || saving}
+                />
+
+                <small>
+                  {uploading
+                    ? "Uploading and optimizing image..."
+                    : "JPEG, PNG or WebP, maximum 5 MB"}
+                </small>
+              </div>
 
               <label>Short Description
                 <textarea rows={2} maxLength={500}
@@ -331,7 +408,7 @@ export default function AdminProductsPage() {
                 Featured Product
               </label>
 
-              <button className="nma-save" type="submit" disabled={saving}>
+              <button className="nma-save" type="submit" disabled={saving || uploading}>
                 <Save size={17}/>
                 {saving ? "Saving..." : editing ? "Update Product" : "Create Product"}
               </button>
