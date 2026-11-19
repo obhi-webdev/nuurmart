@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../styles/admin-management.css";
 @import "../styles/admin-console.css";
 @import "../styles/shopping-pages.css";
 @import "../styles/product-collection-v3.css";

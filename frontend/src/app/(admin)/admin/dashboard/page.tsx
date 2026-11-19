@@ -141,8 +141,20 @@ export default function AdminDashboardPage() {
                 <h3>{item.name}</h3>
                 <p>{item.info}</p>
                 <div>
-                  <span>{item.status}</span>
-                  <ChevronRight size={17} />
+                  {item.name === "Products" || item.name === "Categories" ? (
+                    <Link href={
+                      item.name === "Products"
+                        ? "/admin/products"
+                        : "/admin/categories"
+                    }>
+                      Open Manager <ChevronRight size={17}/>
+                    </Link>
+                  ) : (
+                    <>
+                      <span>{item.status}</span>
+                      <ChevronRight size={17}/>
+                    </>
+                  )}
                 </div>
               </article>
             ))}

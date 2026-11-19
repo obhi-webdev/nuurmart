@@ -1,4 +1,6 @@
 import express from "express";
+import { adminProductRouter } from "./modules/products/admin-product.routes.js";
+import { adminCategoryRouter } from "./modules/categories/admin-category.routes.js";
 import cookieParser from "cookie-parser";
 import { adminRouter } from "./modules/auth/admin.routes.js";
 import cors from "cors";
@@ -25,6 +27,8 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+app.use("/api/admin/products", adminProductRouter);
+app.use("/api/admin/categories", adminCategoryRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/products", productRouter);
 app.use("/api/categories", categoryRouter);
