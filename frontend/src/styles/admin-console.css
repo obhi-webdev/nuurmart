@@ -1,0 +1,185 @@
+/* NUURMART ADMIN CONSOLE V1 */
+
+.nma-login {
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:48% 52%;
+  background:#fffefa;
+  color:#24372b;
+  font-family:var(--font-dm),Arial,sans-serif;
+}
+
+.nma-login-brand {
+  background:#173c30;
+  color:#f4f5ec;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:55px clamp(30px,5vw,85px);
+  overflow:hidden;
+  position:relative;
+}
+
+.nma-brand,.nma-side-logo {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:23px;
+  font-weight:850;
+  letter-spacing:-.06em;
+}
+
+.nma-brand svg { color:#d6ddc1; }
+.nma-overline { font-size:10px; font-weight:800; letter-spacing:.17em; color:#809b86; }
+.nma-login-brand .nma-overline { color:#bdcfb8; }
+.nma-login-brand-content { padding:45px 0; position:relative; }
+.nma-login-brand h1 {
+  font-size:clamp(46px,5.2vw,85px);
+  line-height:1.1;
+  letter-spacing:-.067em;
+  margin:25px 0;
+  font-weight:450;
+}
+.nma-login-brand h1 em {
+  color:#c4d4b4;
+  font-family:Georgia,serif;
+  font-weight:400;
+}
+.nma-login-brand-content p {
+  font-size:14px;
+  color:#c9d5c8;
+  line-height:2;
+  max-width:390px;
+}
+.nma-brand-art {
+  margin-top:35px;
+  width:235px;
+  height:235px;
+  display:grid;
+  place-items:center;
+  border:1px solid #557b62;
+  border-radius:50%;
+  color:#c6d8bd;
+}
+.nma-brand-footer { font-size:10px; letter-spacing:.17em; color:#b6c7b7; }
+.nma-login-main { display:flex; align-items:center; justify-content:center; padding:60px 35px; }
+.nma-login-form-wrap { width:min(430px,100%); }
+.nma-lock {
+  display:grid;
+  place-items:center;
+  width:55px;
+  height:55px;
+  background:#edf2ea;
+  color:#1b4d35;
+  margin-bottom:35px;
+}
+.nma-login-form-wrap h2 {
+  font-size:clamp(35px,4vw,54px);
+  letter-spacing:-.06em;
+  font-weight:530;
+  margin:12px 0;
+}
+.nma-login-intro { font-size:13px; line-height:1.8; color:#839085; }
+.nma-form { display:flex; flex-direction:column; margin-top:35px; }
+.nma-form label { font-size:12px; font-weight:750; margin-bottom:10px; }
+.nma-form > input,.nma-password {
+  width:100%;
+  height:52px;
+  border:1px solid #dfe6dd;
+  background:white;
+  margin-bottom:25px;
+}
+.nma-form > input { padding:0 15px; outline:none; }
+.nma-password { display:flex; align-items:center; }
+.nma-password input {
+  flex:1;
+  height:100%;
+  min-width:0;
+  border:0;
+  outline:0;
+  padding:0 15px;
+  background:transparent;
+}
+.nma-password button { border:0; background:none; padding:12px; }
+.nma-login-submit {
+  border:0;
+  background:#173c30;
+  color:white;
+  padding:17px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:13px;
+  font-weight:750;
+}
+.nma-login-submit:disabled { opacity:.6; cursor:wait; }
+.nma-error { background:#fbece9; padding:12px; color:#9b392b; font-size:12px; margin-bottom:17px; }
+.nma-login-trust { display:flex; align-items:center; gap:10px; margin-top:30px; color:#87958a; font-size:11px; }
+.nma-dashboard { min-height:100vh; display:grid; grid-template-columns:255px minmax(0,1fr); background:#f8f9f6; }
+.nma-sidebar { background:#173c30; color:white; padding:32px 20px; display:flex; flex-direction:column; }
+.nma-side-logo { font-size:20px; margin-bottom:75px; padding:0 12px; }
+.nma-sidebar-caption { font-size:9px; letter-spacing:.17em; color:#9bb9a2; padding:0 12px; margin-bottom:20px; }
+.nma-side-active { display:flex; align-items:center; gap:13px; padding:15px; background:#315d47; font-size:13px; font-weight:750; }
+.nma-sidebar-divider { height:1px; background:#426b54; margin:27px 0; }
+.nma-side-note { font-size:11px; line-height:1.9; padding:0 12px; color:#b3c9b7; }
+.nma-side-bottom { margin-top:auto; display:flex; align-items:center; gap:11px; padding:18px 12px; color:#b3c9b7; font-size:11px; }
+.nma-dashboard-header {
+  min-height:115px;
+  background:white;
+  border-bottom:1px solid #e6e9e2;
+  padding:25px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+.nma-dashboard-header h1 { font-size:30px; letter-spacing:-.05em; margin-top:8px; }
+.nma-admin-actions { display:flex; align-items:center; gap:22px; font-size:12px; }
+.nma-admin-actions button { display:flex; gap:8px; align-items:center; border:1px solid #dfe6db; background:white; padding:12px; }
+.nma-dashboard-content { padding:40px; max-width:1500px; width:100%; margin:0 auto; }
+.nma-welcome {
+  min-height:235px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  background:#e9efe5;
+  padding:45px;
+  color:#244633;
+}
+.nma-welcome h2 { font-size:clamp(28px,3vw,43px); font-weight:550; letter-spacing:-.06em; margin:13px 0; }
+.nma-welcome p { font-size:13px; line-height:1.8; max-width:500px; }
+.nma-modules-header { display:flex; justify-content:space-between; align-items:end; margin:45px 0 25px; gap:15px; }
+.nma-modules-header h2 { font-size:25px; letter-spacing:-.05em; margin-top:9px; }
+.nma-modules-header > span { font-size:10px; letter-spacing:.12em; color:#8b9b8c; }
+.nma-modules { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+.nma-module { background:white; border:1px solid #e4e9df; padding:26px; }
+.nma-module-icon { display:grid; place-items:center; width:48px; height:48px; background:#edf2e9; color:#356347; margin-bottom:25px; }
+.nma-module h3 { font-size:18px; font-weight:700; }
+.nma-module p { font-size:12px; color:#8a978a; margin:10px 0 27px; }
+.nma-module > div:last-child { display:flex; justify-content:space-between; border-top:1px solid #eef0e8; padding-top:15px; color:#87998a; font-size:11px; }
+.nma-security-status { display:flex; align-items:center; gap:10px; font-size:11px; color:#7a887b; margin-top:35px; }
+.nma-loading { min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px; color:#173c30; font-size:13px; }
+
+@media(max-width:1100px) {
+  .nma-modules { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .nma-dashboard { grid-template-columns:210px minmax(0,1fr); }
+}
+@media(max-width:760px) {
+  .nma-login { grid-template-columns:1fr; }
+  .nma-login-brand { padding:25px; min-height:210px; }
+  .nma-login-brand-content { padding:23px 0; }
+  .nma-login-brand h1 { font-size:40px; margin:12px 0; }
+  .nma-brand-art,.nma-login-brand-content p,.nma-brand-footer { display:none; }
+  .nma-login-main { padding:50px 24px; }
+  .nma-dashboard { display:block; }
+  .nma-sidebar { padding:15px 18px; }
+  .nma-side-logo { margin:0; }
+  .nma-sidebar-caption,.nma-side-active,.nma-sidebar-divider,.nma-side-note,.nma-side-bottom { display:none; }
+  .nma-dashboard-header { padding:20px; flex-wrap:wrap; }
+  .nma-dashboard-content { padding:20px; }
+  .nma-welcome { padding:25px; }
+  .nma-welcome > svg { display:none; }
+  .nma-modules { grid-template-columns:1fr; }
+  .nma-admin-actions { gap:10px; }
+}
