@@ -64,3 +64,50 @@
     align-items: flex-start;
   }
 }
+
+/* NUURMART IMAGE PASTE V1 */
+
+.nma-paste-zone {
+  min-height: 135px;
+  padding: 20px;
+  border: 2px dashed #b6cbb5;
+  background: #eff5ec;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  color: #254b35;
+  cursor: default;
+}
+
+.nma-image-upload:focus {
+  outline: 2px solid #3e8157;
+  outline-offset: 3px;
+}
+
+.nma-paste-zone strong {
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.nma-paste-zone span {
+  font-size: 12px;
+  color: #66826c;
+  line-height: 1.7;
+}
+
+.nma-paste-zone kbd {
+  padding: 8px 18px;
+  background: white;
+  color: #214c34;
+  border: 1px solid #c8d8c5;
+  border-radius: 7px;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.nma-image-upload:focus-within .nma-paste-zone {
+  border-color: #3e8157;
+}

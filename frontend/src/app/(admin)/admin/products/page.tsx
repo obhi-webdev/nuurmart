@@ -172,15 +172,12 @@ export default function AdminProductsPage() {
     setMessage("");
   }
 
-  async function uploadImage(
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const image = event.target.files?.[0];
-    if (!image) return;
+  async function uploadSelectedImage(image: File) {
+    if (uploading) return;
 
     if (image.size > 5 * 1024 * 1024) {
       setError("Maximum image size is 5 MB.");
-      event.target.value = "";
+
       return;
     }
 
@@ -212,9 +209,68 @@ export default function AdminProductsPage() {
       );
     } finally {
       setUploading(false);
-      event.target.value = "";
+
     }
   }
+
+
+  async function uploadImage(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      await uploadSelectedImage(file);
+    }
+
+    event.target.value = "";
+  }
+
+  // NUURMART_IMAGE_PASTE_V1
+  // Listen only for actual image data in the clipboard.
+  useEffect(() => {
+    function handleImagePaste(event: ClipboardEvent) {
+      const target = event.target;
+
+      // Allow ordinary text pasting in product form fields.
+      if (
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLSelectElement ||
+        (target instanceof HTMLElement && target.isContentEditable)
+      ) {
+        return;
+      }
+
+      const clipboard = event.clipboardData;
+
+      if (!clipboard) return;
+
+      const item = Array.from(clipboard.items).find(
+        (entry) => entry.kind === "file" &&
+          entry.type.startsWith("image/")
+      );
+
+      const file = item?.getAsFile() ??
+        Array.from(clipboard.files).find(
+          (entry) => entry.type.startsWith("image/")
+        );
+
+      if (!file) return;
+
+      event.preventDefault();
+
+      if (uploading) return;
+
+      void uploadSelectedImage(file);
+    }
+
+    window.addEventListener("paste", handleImagePaste);
+
+    return () => {
+      window.removeEventListener("paste", handleImagePaste);
+    };
+  });
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -342,10 +398,23 @@ export default function AdminProductsPage() {
                 </label>
               </div>
 
-              <div className="nma-image-upload">
+              <div
+                className="nma-image-upload"
+                tabIndex={0}
+                aria-label="Product image upload and paste area"
+              >
                 <label htmlFor="nma-product-upload">
                   Product Image
                 </label>
+
+                <div className="nma-paste-zone">
+                  <strong>Copy & Paste Product Image</strong>
+                  <span>
+                    Copy an image, click here, then press
+                    {" "}Command (⌘) + V on Mac
+                  </span>
+                  <kbd>⌘ + V</kbd>
+                </div>
 
                 {form.image ? (
                   <div className="nma-image-preview">
