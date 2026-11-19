@@ -59,7 +59,7 @@ export function CartDrawer({
             </div>
           ) : (
             items.map((item) => {
-              const product = products.find(
+              const product = item.product ?? products.find(
                 (p) => p.id === item.productId
               );
               if (!product) return null;

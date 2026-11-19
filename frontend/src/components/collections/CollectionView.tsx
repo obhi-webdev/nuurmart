@@ -7,7 +7,7 @@ import {
   Search, ShoppingBag, SlidersHorizontal
 } from "lucide-react";
 import {
-  categories, products, type Category
+  type Category
 } from "@/features/products/catalog";
 import {
   categoryUrl
@@ -15,6 +15,7 @@ import {
 import { ProductCard } from "@/components/home/ProductCard";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { useCart } from "@/features/cart/use-cart";
+import { useStoreCatalog } from "@/hooks/use-store-catalog";
 
 type Sort = "featured" | "low" | "high" | "name";
 
@@ -30,6 +31,7 @@ export function CollectionView({
   const [cartOpen, setCartOpen] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const cart = useCart();
+  const { products, categories, loading, error } = useStoreCatalog();
 
   const filtered = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -196,7 +198,16 @@ export function CollectionView({
               Showing {filtered.length} of {products.length} demo products
             </p>
 
-            {filtered.length > 0 ? (
+            {error ? (
+              <div className="nm4-empty" role="alert">
+                <h2>Catalog unavailable</h2>
+                <p>{error}</p>
+              </div>
+            ) : loading ? (
+              <div className="nm4-empty" role="status">
+                <h2>Loading products...</h2>
+              </div>
+            ) : filtered.length > 0 ? (
               <div className="nm4-collection-grid">
                 {filtered.map((product) => (
                   <ProductCard

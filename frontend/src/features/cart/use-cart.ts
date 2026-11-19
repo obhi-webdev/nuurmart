@@ -6,22 +6,45 @@ import { products, type Product } from "../products/catalog";
 export type CartItem = {
   productId: string;
   quantity: number;
+  product?: Product;
 };
 
 const STORAGE_KEY = "nuurmart-cart-v1";
 
-function isCartItem(value: unknown): value is CartItem {
-  if (typeof value !== "object" || value === null) return false;
+function validItem(value: unknown): value is CartItem {
+  if (!value || typeof value !== "object") return false;
 
   const item = value as Partial<CartItem>;
-  return (
-    typeof item.productId === "string" &&
-    products.some((product) => product.id === item.productId) &&
-    typeof item.quantity === "number" &&
-    Number.isInteger(item.quantity) &&
-    item.quantity > 0 &&
-    item.quantity <= 99
-  );
+
+  if (
+    typeof item.productId !== "string" ||
+    item.productId.length > 120 ||
+    !Number.isInteger(item.quantity) ||
+    !item.quantity ||
+    item.quantity < 1 ||
+    item.quantity > 99
+  ) return false;
+
+  if (item.product !== undefined) {
+    const product = item.product;
+
+    if (
+      !product ||
+      product.id !== item.productId ||
+      typeof product.name !== "string" ||
+      typeof product.category !== "string" ||
+      typeof product.unit !== "string" ||
+      typeof product.image !== "string" ||
+      typeof product.accent !== "string" ||
+      typeof product.price !== "number" ||
+      !Number.isFinite(product.price) ||
+      product.price < 0
+    ) return false;
+  } else if (!products.some((p) => p.id === item.productId)) {
+    return false;
+  }
+
+  return true;
 }
 
 export function useCart() {
@@ -30,16 +53,19 @@ export function useCart() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed: unknown = JSON.parse(saved);
+      const raw = localStorage.getItem(STORAGE_KEY);
+
+      if (raw) {
+        const parsed: unknown = JSON.parse(raw);
+
         if (Array.isArray(parsed)) {
-          setItems(parsed.filter(isCartItem));
+          setItems(parsed.filter(validItem).slice(0, 100));
         }
       }
     } catch {
       localStorage.removeItem(STORAGE_KEY);
     }
+
     setLoaded(true);
   }, []);
 
@@ -51,15 +77,26 @@ export function useCart() {
 
   function add(product: Product) {
     setItems((current) => {
-      const existing = current.find((item) => item.productId === product.id);
+      const existing = current.find(
+        (item) => item.productId === product.id
+      );
+
       if (existing) {
         return current.map((item) =>
           item.productId === product.id
-            ? { ...item, quantity: Math.min(99, item.quantity + 1) }
+            ? {
+                ...item,
+                product,
+                quantity: Math.min(99, item.quantity + 1),
+              }
             : item
         );
       }
-      return [...current, { productId: product.id, quantity: 1 }];
+
+      return [
+        ...current,
+        { productId: product.id, quantity: 1, product },
+      ];
     });
   }
 
@@ -68,10 +105,16 @@ export function useCart() {
       current
         .map((item) =>
           item.productId === productId
-            ? { ...item, quantity: item.quantity + delta }
+            ? {
+                ...item,
+                quantity: Math.max(
+                  0,
+                  Math.min(99, item.quantity + delta)
+                ),
+              }
             : item
         )
-        .filter((item) => item.quantity > 0 && item.quantity <= 99)
+        .filter((item) => item.quantity > 0)
     );
   }
 
@@ -81,10 +124,15 @@ export function useCart() {
     );
   }
 
-  const count = items.reduce((sum, item) => sum + item.quantity, 0);
+  const count = items.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
 
   const subtotal = items.reduce((sum, item) => {
-    const product = products.find((p) => p.id === item.productId);
+    const product = item.product ??
+      products.find((p) => p.id === item.productId);
+
     return sum + (product?.price ?? 0) * item.quantity;
   }, 0);
 

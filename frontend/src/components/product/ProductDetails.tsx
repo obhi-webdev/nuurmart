@@ -8,12 +8,13 @@ import {
   Leaf, Minus, Plus, ShieldCheck, ShoppingBag, Truck
 } from "lucide-react";
 import {
-  products, formatPrice, type Product
+  formatPrice, type Product
 } from "@/features/products/catalog";
 import {
   categoryUrl, productUrl
 } from "@/features/products/routes";
 import { useCart } from "@/features/cart/use-cart";
+import { useStoreCatalog } from "@/hooks/use-store-catalog";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { ProductCard } from "@/components/home/ProductCard";
 
@@ -22,6 +23,7 @@ export function ProductDetails({ product }: { product: Product }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const cart = useCart();
+  const { products } = useStoreCatalog();
 
   const discount = product.compareAt
     ? Math.round((1 - product.price / product.compareAt) * 100)

@@ -21,11 +21,10 @@ import { ProductCard } from "@/components/home/ProductCard";
 import { PremiumHero } from "@/components/home/hero/PremiumHero";
 import { PromoBanners } from "@/components/home/promotions/PromoBanners";
 import {
-  categories,
-  products,
   type Category,
 } from "@/features/products/catalog";
 import { useCart } from "@/features/cart/use-cart";
+import { useStoreCatalog } from "@/hooks/use-store-catalog";
 
 const categoryPhotos: Record<string, string> = {
   Honey: "/images/categories/honey.jpg",
@@ -41,6 +40,7 @@ export function Storefront() {
   const [query, setQuery] = useState("");
   const [cartOpen, setCartOpen] = useState(false);
   const cart = useCart();
+  const { products, categories, loading, error } = useStoreCatalog();
   // nm3-wishlist-state: session-only wishlist until account APIs exist.
   const [favorites, setFavorites] = useState<string[]>([]);
 
@@ -123,7 +123,7 @@ export function Storefront() {
                 >
                   <div className="nm-category-art">
                     <Image
-                      src={categoryPhotos[item.name]}
+                      src={categoryPhotos[item.name] || "/images/campaigns/organic-market.jpg"}
                       alt={`${item.name} category`}
                       fill
                       sizes="(max-width: 760px) 33vw, 17vw"
@@ -165,7 +165,16 @@ export function Storefront() {
               ))}
             </div>
 
-            {filtered.length > 0 ? (
+            {error ? (
+              <div className="nm-no-results" role="alert">
+                <h3>Unable to load products</h3>
+                <p>{error}. Please verify the NuurMart API.</p>
+              </div>
+            ) : loading ? (
+              <div className="nm-no-results" role="status">
+                <h3>Loading the collection...</h3>
+              </div>
+            ) : filtered.length > 0 ? (
               <div className="nm-product-grid">
                 {filtered.map((product) => (
                   <ProductCard
