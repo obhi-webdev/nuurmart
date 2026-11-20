@@ -46,6 +46,7 @@ type FormData = {
   shortDescription: string;
   description: string;
   image: string;
+  images: string[];
   featured: boolean;
   status: Product["status"];
 };
@@ -62,6 +63,7 @@ const empty: FormData = {
   shortDescription: "",
   description: "",
   image: "",
+  images: [],
   featured: false,
   status: "draft"
 };
@@ -80,6 +82,7 @@ function toForm(p: Product): FormData {
     shortDescription: p.shortDescription || "",
     description: p.description || "",
     image: p.images?.[0] || "",
+    images: [...(p.images || [])],
     featured: p.featured,
     status: p.status
   };
@@ -175,6 +178,11 @@ export default function AdminProductsPage() {
   async function uploadSelectedImage(image: File) {
     if (uploading) return;
 
+    if (form.images.length >= 12) {
+      setError("Maximum 12 images allowed per product.");
+      return;
+    }
+
     if (image.size > 5 * 1024 * 1024) {
       setError("Maximum image size is 5 MB.");
 
@@ -201,8 +209,22 @@ export default function AdminProductsPage() {
         throw new Error(result.message || "Image upload failed");
       }
 
-      change("image", result.data.url);
-      setMessage("Image uploaded and optimized successfully.");
+      // NUURMART_MULTI_IMAGE_V1
+      setForm((current) => {
+        if (current.images.includes(result.data.url)) {
+          return current;
+        }
+
+        const images = [...current.images, result.data.url].slice(0, 12);
+
+        return {
+          ...current,
+          images,
+          image: images[0] || ""
+        };
+      });
+
+      setMessage("Image added to product gallery.");
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "Image upload failed"
@@ -272,6 +294,54 @@ export default function AdminProductsPage() {
     };
   });
 
+  function removeGalleryImage(index: number) {
+    setForm((current) => {
+      const images = current.images.filter((_, i) => i !== index);
+
+      return {
+        ...current,
+        images,
+        image: images[0] || ""
+      };
+    });
+  }
+
+  function moveGalleryImage(index: number, direction: -1 | 1) {
+    setForm((current) => {
+      const next = index + direction;
+
+      if (next < 0 || next >= current.images.length) {
+        return current;
+      }
+
+      const images = [...current.images];
+      [images[index], images[next]] = [images[next], images[index]];
+
+      return {
+        ...current,
+        images,
+        image: images[0] || ""
+      };
+    });
+  }
+
+  function makeCoverImage(index: number) {
+    setForm((current) => {
+      const images = [...current.images];
+
+      if (!images[index]) return current;
+
+      const [selected] = images.splice(index, 1);
+      images.unshift(selected);
+
+      return {
+        ...current,
+        images,
+        image: images[0] || ""
+      };
+    });
+  }
+
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSaving(true);
@@ -291,7 +361,7 @@ export default function AdminProductsPage() {
         unit: form.unit.trim(),
         shortDescription: form.shortDescription,
         description: form.description,
-        images: form.image.trim() ? [form.image.trim()] : [],
+        images: form.images,
         featured: form.featured,
         status: form.status
       };
@@ -432,6 +502,69 @@ export default function AdminProductsPage() {
                     No product image selected
                   </div>
                 )}
+
+                {/* NUURMART MULTI IMAGE GALLERY */}
+                {form.images.length > 0 && (
+                  <div className="nma-gallery-grid">
+                    {form.images.map((src, index) => (
+                      <div className="nma-gallery-item" key={src}>
+                        <div className="nma-gallery-image">
+                          <Image
+                            src={src}
+                            alt={`Product image ${index + 1}`}
+                            width={160}
+                            height={160}
+                            unoptimized
+                          />
+                          {index === 0 && (
+                            <span className="nma-cover-badge">COVER</span>
+                          )}
+                        </div>
+
+                        <div className="nma-gallery-actions">
+                          {index !== 0 && (
+                            <button
+                              type="button"
+                              onClick={() => makeCoverImage(index)}
+                            >
+                              Cover
+                            </button>
+                          )}
+
+                          <button
+                            type="button"
+                            aria-label={`Move image ${index + 1} left`}
+                            disabled={index === 0}
+                            onClick={() => moveGalleryImage(index, -1)}
+                          >
+                            ←
+                          </button>
+
+                          <button
+                            type="button"
+                            aria-label={`Move image ${index + 1} right`}
+                            disabled={index === form.images.length - 1}
+                            onClick={() => moveGalleryImage(index, 1)}
+                          >
+                            →
+                          </button>
+
+                          <button
+                            type="button"
+                            className="nma-gallery-remove"
+                            onClick={() => removeGalleryImage(index)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <small>
+                  {form.images.length}/12 images · First image is the cover
+                </small>
 
                 <input
                   id="nma-product-upload"

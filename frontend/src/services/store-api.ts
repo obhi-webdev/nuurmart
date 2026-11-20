@@ -14,6 +14,10 @@ type ApiProduct = {
   unit: string;
   images: string[];
   stockQuantity: number;
+  trackInventory?: boolean;
+  description?: string;
+  shortDescription?: string;
+  sku?: string;
   featured: boolean;
   status: string;
 };
@@ -66,9 +70,20 @@ export function mapProduct(item: ApiProduct): Product {
     compareAt: item.compareAtPrice,
     unit: item.unit,
     image: item.images?.[0] || "/images/campaigns/healthy-food.jpg",
+    images: Array.isArray(item.images)
+      ? item.images.filter((src) =>
+          typeof src === "string" &&
+          /^\/(images|uploads)\//.test(src)
+        )
+      : [],
     accent: "#F4F1E9",
     badge: item.featured ? "FEATURED" : undefined,
     featured: item.featured,
+    shortDescription: item.shortDescription || "",
+    description: item.description || "",
+    stockQuantity: item.stockQuantity,
+    trackInventory: item.trackInventory ?? true,
+    sku: item.sku || "",
   };
 }
 

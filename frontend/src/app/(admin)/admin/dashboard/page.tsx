@@ -141,11 +141,13 @@ export default function AdminDashboardPage() {
                 <h3>{item.name}</h3>
                 <p>{item.info}</p>
                 <div>
-                  {item.name === "Products" || item.name === "Categories" ? (
+                  {(item.name === "Products" || item.name === "Categories" || item.name === "Orders") ? (
                     <Link href={
                       item.name === "Products"
                         ? "/admin/products"
-                        : "/admin/categories"
+                        : item.name === "Orders"
+                          ? "/admin/orders"
+                          : "/admin/categories"
                     }>
                       Open Manager <ChevronRight size={17}/>
                     </Link>

@@ -1,0 +1,219 @@
+/* NUURMART PREMIUM PRODUCT GALLERY */
+
+.nmpg-gallery {
+  width: 100%;
+  min-width: 0;
+}
+
+.nmpg-main {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f3f1e9;
+  border: 1px solid #ecece5;
+}
+
+.nmpg-main-photo {
+  object-fit: contain;
+  padding: 18px;
+  transition: transform .35s ease;
+}
+
+.nmpg-main:hover .nmpg-main-photo {
+  transform: scale(1.035);
+}
+
+.nmpg-discount {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+  padding: 10px 13px;
+  background: #234f38;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .07em;
+}
+
+.nmpg-zoom-button {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #dfe8db;
+  border-radius: 50%;
+  background: white;
+  color: #264a35;
+  cursor: pointer;
+}
+
+.nmpg-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #e0e8de;
+  border-radius: 50%;
+  background: rgba(255,255,255,.94);
+  color: #234936;
+  transform: translateY(-50%);
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0,0,0,.05);
+}
+
+.nmpg-arrow-left { left: 15px; }
+.nmpg-arrow-right { right: 15px; }
+
+.nmpg-counter {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  padding: 7px 12px;
+  background: rgba(255,255,255,.95);
+  color: #365542;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.nmpg-thumbnails {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 13px 1px 7px;
+  scrollbar-width: thin;
+}
+
+.nmpg-thumb {
+  position: relative;
+  flex: 0 0 82px;
+  width: 82px;
+  height: 82px;
+  background: #f4f4ee;
+  border: 2px solid transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color .2s ease;
+}
+
+.nmpg-thumb img {
+  object-fit: contain;
+  padding: 5px;
+}
+
+.nmpg-thumb-active {
+  border-color: #24553a;
+}
+
+.nmpg-thumb:hover {
+  border-color: #7fa589;
+}
+
+.nmpg-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(13,20,15,.97);
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.nmpg-lightbox-header {
+  min-height: 80px;
+  padding: 18px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  font-size: 13px;
+}
+
+.nmpg-lightbox-header button,
+.nmpg-lightbox-content > button {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  color: white;
+  background: rgba(255,255,255,.08);
+  cursor: pointer;
+}
+
+.nmpg-lightbox-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 25px;
+}
+
+.nmpg-lightbox-photo {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+.nmpg-lightbox-photo img {
+  object-fit: contain;
+}
+
+.nmpg-empty {
+  min-height: 400px;
+  display: grid;
+  place-items: center;
+  background: #f3f1e9;
+  color: #809084;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .nmpg-main-photo { padding: 8px; }
+  .nmpg-thumb {
+    flex-basis: 68px;
+    width: 68px;
+    height: 68px;
+  }
+  .nmpg-arrow {
+    width: 36px;
+    height: 36px;
+  }
+  .nmpg-zoom-button {
+    width: 39px;
+    height: 39px;
+  }
+  .nmpg-lightbox-header {
+    padding: 12px 18px;
+    min-height: 65px;
+  }
+  .nmpg-lightbox-content {
+    padding: 12px 6px;
+    gap: 4px;
+  }
+  .nmpg-lightbox-content > button {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nmpg-main-photo,
+  .nmpg-thumb {
+    transition: none;
+  }
+}

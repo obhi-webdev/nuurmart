@@ -75,6 +75,21 @@ export function useCart() {
     }
   }, [items, loaded]);
 
+  useEffect(() => {
+    function onCleared() {
+      setItems([]);
+    }
+
+    window.addEventListener("nuurmart-cart-cleared", onCleared);
+
+    return () => {
+      window.removeEventListener(
+        "nuurmart-cart-cleared",
+        onCleared
+      );
+    };
+  }, []);
+
   function add(product: Product) {
     setItems((current) => {
       const existing = current.find(
@@ -124,6 +139,15 @@ export function useCart() {
     );
   }
 
+  function clear() {
+    setItems([]);
+    localStorage.removeItem(STORAGE_KEY);
+
+    window.dispatchEvent(
+      new CustomEvent("nuurmart-cart-cleared")
+    );
+  }
+
   const count = items.reduce(
     (sum, item) => sum + item.quantity,
     0
@@ -138,10 +162,12 @@ export function useCart() {
 
   return {
     items,
+    loaded,
     count,
     subtotal,
     add,
     remove,
+    clear,
     changeQuantity,
   };
 }

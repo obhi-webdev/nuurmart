@@ -22,7 +22,11 @@ export async function generateMetadata({
         ? `${product.name} | NuurMart`
         : "Product Not Found | NuurMart",
       description: product
-        ? `Explore ${product.name} at NuurMart.`
+        ? (
+            product.shortDescription?.trim() ||
+            product.description?.trim().slice(0, 155) ||
+            `Explore ${product.name} at NuurMart.`
+          ).slice(0, 160)
         : "Product not found.",
     };
   } catch {

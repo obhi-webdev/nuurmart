@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { ProductGallery } from "@/components/product/ProductGallery";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -24,6 +24,14 @@ export function ProductDetails({ product }: { product: Product }) {
   const [favorites, setFavorites] = useState<string[]>([]);
   const cart = useCart();
   const { products } = useStoreCatalog();
+
+  // NUURMART_STOCK_DETAILS_V1
+  const stockTracked = product.trackInventory ?? false;
+  const availableStock = stockTracked
+    ? Math.max(0, product.stockQuantity ?? 0)
+    : 99;
+  const inStock = availableStock > 0;
+  const maxQuantity = Math.min(99, availableStock);
 
   const discount = product.compareAt
     ? Math.round((1 - product.price / product.compareAt) * 100)
@@ -92,21 +100,19 @@ export function ProductDetails({ product }: { product: Product }) {
 
           <div className="nm4-detail-grid">
             <div className="nm4-image-area">
-              <div className="nm4-main-image">
-                <Image
-                  src={product.image}
-                  alt={`Demo product photography: ${product.name}`}
-                  fill
-                  priority
-                  sizes="(max-width: 850px) 100vw, 50vw"
-                  className="nm4-image-cover"
-                />
-                {discount > 0 && (
-                  <span className="nm4-discount">SAVE {discount}%</span>
-                )}
-              </div>
+              <ProductGallery
+                images={
+                  product.images && product.images.length > 0
+                    ? product.images
+                    : [product.image]
+                }
+                name={product.name}
+                discount={discount}
+              />
+
               <p className="nm4-photo-note">
-                Illustrative product photo. Actual packaging may differ.
+                Product images are for reference. Please verify
+                packaging and product details before ordering.
               </p>
             </div>
 
@@ -116,8 +122,25 @@ export function ProductDetails({ product }: { product: Product }) {
               </span>
               <h1>{product.name}</h1>
               <p className="nm4-subtitle">
-                Thoughtfully selected grocery essentials
+                {product.shortDescription ||
+                  "Thoughtfully selected grocery essentials"}
               </p>
+
+              <div className={
+                inStock
+                  ? "nmp-stock nmp-stock-available"
+                  : "nmp-stock nmp-stock-unavailable"
+              }>
+                <span className="nmp-stock-dot" />
+                <strong>
+                  {inStock ? "In Stock" : "Out of Stock"}
+                </strong>
+                {stockTracked && inStock && (
+                  <span>
+                    {availableStock} available
+                  </span>
+                )}
+              </div>
 
               <div className="nm4-price">
                 <strong>{formatPrice(product.price)}</strong>
@@ -141,13 +164,14 @@ export function ProductDetails({ product }: { product: Product }) {
 
               <div className="nm4-divider" />
 
-              <p className="nm4-description">
-                Discover a carefully selected addition to your
-                everyday pantry. Full sourcing details, ingredients,
-                nutrition information and actual stock availability
-                will be published when the official product catalog
-                is connected.
-              </p>
+              <div className="nmp-product-description">
+                <h2>Product Description</h2>
+                <p className="nm4-description">
+                  {product.description?.trim() ||
+                    product.shortDescription?.trim() ||
+                    "Product description is not available yet."}
+                </p>
+              </div>
 
               <div className="nm4-quantity-group">
                 <span>Quantity</span>
@@ -156,16 +180,18 @@ export function ProductDetails({ product }: { product: Product }) {
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     aria-label="Decrease quantity"
-                    disabled={quantity <= 1}
+                    disabled={!inStock || quantity <= 1}
                   >
                     <Minus size={16} />
                   </button>
                   <output>{quantity}</output>
                   <button
                     type="button"
-                    onClick={() => setQuantity((q) => Math.min(99, q + 1))}
+                    onClick={() =>
+                      setQuantity((q) => Math.min(maxQuantity, q + 1))
+                    }
                     aria-label="Increase quantity"
-                    disabled={quantity >= 99}
+                    disabled={!inStock || quantity >= maxQuantity}
                   >
                     <Plus size={16} />
                   </button>
@@ -175,10 +201,19 @@ export function ProductDetails({ product }: { product: Product }) {
               <button
                 type="button"
                 className="nm4-add-cart"
-                onClick={() => add(product, quantity)}
+                onClick={() => {
+                  if (inStock) {
+                    add(product, Math.min(quantity, maxQuantity));
+                  }
+                }}
+                disabled={!inStock}
               >
                 <ShoppingBag size={19} />
-                Add to Bag — {formatPrice(product.price * quantity)}
+                {inStock
+                  ? `Add to Bag — ${formatPrice(
+                      product.price * Math.min(quantity, maxQuantity)
+                    )}`
+                  : "Currently Out of Stock"}
                 <ArrowRight size={18} />
               </button>
 

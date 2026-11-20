@@ -1,0 +1,67 @@
+/* NUURMART PRODUCT STOCK & DESCRIPTION */
+
+.nmp-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin: 14px 0 18px;
+  padding: 10px 13px;
+  font-size: 12px;
+}
+
+.nmp-stock-available {
+  color: #22643a;
+  background: #eaf5ea;
+}
+
+.nmp-stock-unavailable {
+  color: #9e493a;
+  background: #fff0ec;
+}
+
+.nmp-stock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.nmp-stock strong {
+  font-size: 12px;
+}
+
+.nmp-stock > span:last-child:not(.nmp-stock-dot) {
+  opacity: .8;
+  padding-left: 7px;
+  border-left: 1px solid currentColor;
+}
+
+.nmp-product-description {
+  margin: 8px 0 22px;
+}
+
+.nmp-product-description h2 {
+  font-size: 16px;
+  font-weight: 750;
+  color: #244b35;
+  margin-bottom: 12px;
+}
+
+.nmp-product-description .nm4-description {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  line-height: 1.85;
+}
+
+.nm4-add-cart:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+  background: #718078;
+}
+
+@media (max-width: 700px) {
+  .nmp-stock {
+    margin: 12px 0;
+  }
+}

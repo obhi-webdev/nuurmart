@@ -15,9 +15,15 @@ export type Product = {
   compareAt?: number;
   unit: string;
   image: string;
+  images?: string[];
   accent: string;
   badge?: string;
   featured?: boolean;
+  shortDescription?: string;
+  description?: string;
+  stockQuantity?: number;
+  trackInventory?: boolean;
+  sku?: string;
 };
 
 export const categories: {

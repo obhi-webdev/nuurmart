@@ -1,4 +1,7 @@
 import express from "express";
+import { adminOrderRouter } from "./modules/orders/admin-order.routes.js";
+import { orderRouter } from "./modules/orders/order.routes.js";
+import { checkoutRouter } from "./modules/checkout/checkout.routes.js";
 import path from "node:path";
 import { productUploadRouter } from "./modules/products/product-upload.routes.js";
 import { adminProductRouter } from "./modules/products/admin-product.routes.js";
@@ -44,6 +47,9 @@ app.use(
 app.use("/api/admin/uploads", productUploadRouter);
 app.use("/api/admin/products", adminProductRouter);
 app.use("/api/admin/categories", adminCategoryRouter);
+app.use("/api/checkout", checkoutRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/admin/orders", adminOrderRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/products", productRouter);
 app.use("/api/categories", categoryRouter);

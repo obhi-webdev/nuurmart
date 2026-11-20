@@ -1,4 +1,10 @@
 @import "tailwindcss";
+@import "../styles/order-tracking-v1.css";
+@import "../styles/cod-checkout-v1.css";
+@import "../styles/admin-orders-v1.css";
+@import "../styles/checkout-v1.css";
+@import "../styles/product-stock-v1.css";
+@import "../styles/product-gallery-v1.css";
 @import "../styles/admin-upload.css";
 @import "../styles/admin-management.css";
 @import "../styles/admin-console.css";
