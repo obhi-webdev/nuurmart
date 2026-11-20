@@ -1,19 +1,28 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 
+const backendOrigin = (
+  process.env.NUURMART_BACKEND_ORIGIN ||
+  "http://127.0.0.1:5001"
+).replace(/\/$/, "");
+
 const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/uploads/:path*",
-        destination: "http://127.0.0.1:5001/uploads/:path*",
+        source: "/api/:path*",
+        destination: `${backendOrigin}/api/:path*`
       },
+      {
+        source: "/uploads/:path*",
+        destination: `${backendOrigin}/uploads/:path*`
+      }
     ];
   },
 
   turbopack: {
-    root: path.resolve(process.cwd(), ".."),
-  },
+    root: path.resolve(process.cwd(), "..")
+  }
 };
 
 export default nextConfig;

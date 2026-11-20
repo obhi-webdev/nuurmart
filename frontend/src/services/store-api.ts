@@ -1,7 +1,11 @@
 import type { Product, Category } from "@/features/products/catalog";
 
 const API = (
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api"
+  typeof window === "undefined" &&
+  process.env.NUURMART_SERVER_API_URL
+    ? process.env.NUURMART_SERVER_API_URL
+    : process.env.NEXT_PUBLIC_API_URL ||
+      "http://localhost:5001/api"
 ).replace(/\/$/, "");
 
 type ApiProduct = {

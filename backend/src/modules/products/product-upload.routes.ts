@@ -11,6 +11,22 @@ import {
 
 export const productUploadRouter = Router();
 
+// NUURMART_PRODUCTION_UPLOAD_GUARD_V1
+// Render's ephemeral filesystem is not durable media storage.
+productUploadRouter.use((req, res, next) => {
+  if (process.env.NODE_ENV === "production") {
+    res.status(503).json({
+      success: false,
+      message:
+        "Image uploads are temporarily disabled until " +
+        "persistent cloud media storage is configured."
+    });
+    return;
+  }
+
+  next();
+});
+
 const UPLOAD_DIR = path.resolve(
   process.cwd(),
   "uploads",
